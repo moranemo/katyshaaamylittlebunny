@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Для Кати 💗</title>
+<style>
+  :root{
+    --bg1:#ffe4ee; --bg2:#ffd0e2; --pink:#ff8fb8; --pink-d:#e8639a;
+    --ink:#6b2d4a; --card:rgba(255,248,251,.86); --soft:#ffc2d9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    font-family:"Nunito","Comic Sans MS","Trebuchet MS",system-ui,sans-serif;
+    color:var(--ink);
+    background:radial-gradient(circle at 20% 10%,var(--bg1),var(--bg2) 70%) fixed;
+    min-height:100vh; overflow-x:hidden;
+    display:flex; align-items:center; justify-content:center; padding:16px;
+  }
+  .cloud{position:fixed;background:#fff;border-radius:50px;opacity:.7;filter:blur(1px);z-index:0}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+  .c1{width:120px;height:36px;top:8%;left:6%}
+  .c1::before{width:50px;height:50px;top:-24px;left:18px}
+  .c1::after{width:36px;height:36px;top:-16px;left:62px}
+  .c2{width:150px;height:44px;bottom:12%;right:5%}
+  .c2::before{width:60px;height:60px;top:-30px;left:24px}
+  .c2::after{width:44px;height:44px;top:-20px;left:84px}
+
+  .card{
+    position:relative; z-index:2; width:100%; max-width:460px;
+    background:var(--card); border-radius:36px; padding:26px 22px 24px;
+    text-align:center;
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    box-shadow:0 20px 50px rgba(232,99,154,.25), inset 0 0 0 4px #fff;
+    border:3px dashed var(--soft);
+  }
+  .screen{display:none;animation:pop .6s ease}
+  .screen.active{display:block}
+  @keyframes pop{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+  h1{font-size:25px;line-height:1.25;margin:10px 0 8px}
+  p.sub{font-size:16px;opacity:.85;margin-bottom:18px}
+  .bunny{width:150px;height:150px;margin:0 auto;display:block;animation:bob 3s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  input[type=date]{
+    width:100%; font:inherit; font-size:18px; color:var(--ink);
+    padding:14px 16px; border-radius:20px; border:3px solid var(--soft);
+    background:#fff; outline:none; text-align:center;
+  }
+  input[type=date]:focus{border-color:var(--pink)}
+  button{
+    margin-top:14px; width:100%; font:inherit; font-size:18px; font-weight:700;
+    color:#fff; background:linear-gradient(180deg,var(--pink),var(--pink-d));
+    border:none; border-radius:999px; padding:14px 20px; cursor:pointer;
+    box-shadow:0 8px 18px rgba(232,99,154,.4); transition:transform .15s;
+  }
+  button:active{transform:scale(.97)}
+  .err{min-height:24px;margin-top:10px;font-size:15px;color:var(--pink-d);font-weight:700}
+  .shake{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+  .badge{
+    display:inline-block;background:var(--soft);padding:5px 14px;border-radius:999px;
+    font-weight:700;font-size:13px;
+  }
+  .photo{
+    width:100%; max-width:300px; margin:12px auto 6px;
+    border-radius:24px; border:6px solid #fff;
+    box-shadow:0 10px 24px rgba(232,99,154,.35);
+    transform:rotate(-2deg); overflow:hidden; background:var(--bg1);
+  }
+  .photo img{width:100%;height:auto;display:block}
+  .days{font-weight:700;color:var(--pink-d);font-size:15px;margin:8px 0 10px}
+
+  /* письмо с автопрокруткой */
+  .letter-wrap{position:relative;margin-top:6px}
+  .letter{
+    height:min(300px,36vh); overflow-y:auto; text-align:left;
+    padding:18px 6px 18px 4px; font-size:16px; line-height:1.6;
+    scrollbar-width:thin; scrollbar-color:var(--soft) transparent;
+    -webkit-mask-image:linear-gradient(transparent 0,#000 14%,#000 86%,transparent 100%);
+            mask-image:linear-gradient(transparent 0,#000 14%,#000 86%,transparent 100%);
+  }
+  .letter p{margin-bottom:12px;overflow-wrap:anywhere}
+  .letter p.gap{margin-top:26px}
+  .letter p.end{font-weight:700;text-align:center;font-size:18px;color:var(--pink-d);margin-top:26px}
+  .hint{font-size:13px;opacity:.7;margin-top:6px}
+  #gift{margin:22px 0 40px;animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(1.04)}}
+
+  /* окно с QR-кодом */
+  .modal{
+    position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;
+    background:rgba(107,45,74,.45);padding:20px;
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  }
+  .modal.open{display:flex;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal-box{
+    position:relative;background:#fff8fb;border-radius:30px;padding:24px 20px 20px;
+    max-width:380px;width:100%;text-align:center;border:3px dashed var(--soft);
+    box-shadow:0 20px 50px rgba(232,99,154,.35);max-height:92vh;overflow:auto;
+    animation:pop .4s ease;
+  }
+  .modal-box h2{font-size:22px;margin-bottom:6px}
+  .modal-box p{font-size:15px;opacity:.85;margin-bottom:12px}
+  .qr{background:#fff;border-radius:18px;padding:10px;border:3px solid var(--soft)}
+  .qr img{width:100%;height:auto;display:block;border-radius:10px}
+  .qr .soon{padding:30px 10px;font-size:16px;line-height:1.5}
+  .close{margin-top:14px;background:#fff;color:var(--pink-d);box-shadow:none;border:3px solid var(--soft)}
+
+  .heart{position:fixed;top:-40px;z-index:1;pointer-events:none;animation:fall linear forwards;will-change:transform}
+  @keyframes fall{
+    0%{transform:translate(0,0) rotate(0)}
+    50%{transform:translate(18px,55vh) rotate(180deg)}
+    100%{transform:translate(-8px,112vh) rotate(360deg);opacity:.3}
+  }
+</style>
+</head>
+<body>
+<div class="cloud c1"></div><div class="cloud c2"></div>
+
+<main class="card">
+
+  <!-- Экран 1: ввод даты -->
+  <section id="s1" class="screen active">
+    <svg class="bunny" viewBox="0 0 200 200" aria-hidden="true">
+      <ellipse cx="72" cy="52" rx="18" ry="46" fill="#fff" stroke="#ffb3cf" stroke-width="4"/>
+      <ellipse cx="72" cy="56" rx="8" ry="30" fill="#ffc2d9"/>
+      <ellipse cx="128" cy="52" rx="18" ry="46" fill="#fff" stroke="#ffb3cf" stroke-width="4" transform="rotate(10 128 52)"/>
+      <ellipse cx="128" cy="56" rx="8" ry="30" fill="#ffc2d9" transform="rotate(10 128 52)"/>
+      <circle cx="100" cy="120" r="62" fill="#fff" stroke="#ffb3cf" stroke-width="4"/>
+      <circle cx="78" cy="118" r="6" fill="#6b2d4a"/><circle cx="122" cy="118" r="6" fill="#6b2d4a"/>
+      <circle cx="80" cy="116" r="2" fill="#fff"/><circle cx="124" cy="116" r="2" fill="#fff"/>
+      <ellipse cx="62" cy="136" rx="11" ry="7" fill="#ffb3cf" opacity=".8"/>
+      <ellipse cx="138" cy="136" rx="11" ry="7" fill="#ffb3cf" opacity=".8"/>
+      <ellipse cx="100" cy="132" rx="6" ry="4.5" fill="#ff8fb8"/>
+      <path d="M100 137 q-8 10 -16 4 M100 137 q8 10 16 4" fill="none" stroke="#6b2d4a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M100 66 l-20 -12 q-6 12 0 24z M100 66 l20 -12 q6 12 0 24z" fill="#ff8fb8" transform="translate(0 -6)"/>
+      <circle cx="100" cy="62" r="7" fill="#e8639a"/>
+    </svg>
+    <h1>Привет, Катя! 🌸</h1>
+    <p class="sub">Для тебя приготовлен маленький сюрприз.<br>Введи дату, когда всё началось 💗</p>
+    <input id="date" type="date" aria-label="Дата начала отношений">
+    <div id="err" class="err"></div>
+    <button id="go">Открыть сюрприз ✨</button>
+  </section>
+
+  <!-- Экран 2: поздравление -->
+  <section id="s2" class="screen">
+    <span class="badge">19.08.2026 → 19.11.2026</span>
+    <h1>Катя, нам 3 месяца! 🎀</h1>
+    <div class="photo">
+      <img src="photo.jpg" alt="Мы вместе">
+    </div>
+    <p class="days" id="days"></p>
+
+    <div class="letter-wrap">
+      <div class="letter" id="letter">
+        <p>привет катюшш, пишу это в нули, отправлю ближе к вечеру (все таки тогда предложил встречаться хаывх) да и ты спишь уже сейчас солнышко). темы немного могут скакать, но я постараюсь написать не подбирая слов, а буквально, так как хочу🩶</p>
+        <p>во первых я безумно рад, я рад каждый день был, и являюсь тому что ты моя девушка.</p>
+        <p>для когота, это могут быть просто цифры, просто дни. но для меня сегодня 3 месяца как мы это "мы" котенок&lt;333</p>
+        <p>я очень сильно тебя люблю, и каждый раз когда так пишу, я просто пытаюсь уместить в эти 5 слов, все то, что в жизни то блять передать не могу</p>
+        <p>ты настолько яркая, настолько добрая и заботливая, что я не верил что ты есть, а сейчас ты моя девушка, а я твой парень. я себе завидую простопиздец ежедневно. твои самые красивые в мире глазки, самые мягкие и приятные губки, самые нежные ручки, и самыелучшиеножки. все в тебе люблю солнышко</p>
+        <p>на протяжении этих трех месяцев, вижу как ты стараешься, и делаешь каждый мой новый день лучше, жизнь насыщеннее, и эмоции настоящими</p>
+        <p>благодаря тебе я начал понимать себя, не боятся своих эмоций, и не думать что все что чувствую это неправильно.</p>
+        <p>вчера не очень много поговорили, да и последнее время мало времени на нас получается, тяжеловато сейчас нам обоим, но в голове так и лежат твои слова, о том что ты будешь рядом.</p>
+        <p>недопонимания какиета, честно, прости меня что поднимаю какието темы по-несколько раз, порой говорю не то, что нужно в тот или иной момент, что тему перевожу на себя. я не хочу специально выводить тебя на эмоции этим, и портить порой тебе настроение. мне важно чтобы мы слышали друг друга, потому что мне важны твои чувства, твои мысли, да блять ну просто твое состояние, что ты сегодня кушала, как проснулась, и какую музыку ты будешь слушать пока идешь на работу. пусть кто угодно ненавидит меня, но мне важна моя девушка, и во всех ситуациях твое мнение будет иметь приоритет несравнимый не с чьим. думаю о тебе все также, все также спешу домой, или просто выйти покурить чтобы написать тебе даже самую банальную хуйню какуют хавыхах. мне безумно нравится тебя смешить, поддерживать когда тебе грустно, тяжело, или просто плохо. я не могу описать насколько сильно приятно осознавать, что в самые счастливые, и плохие периоды мы есть у друг друга. всегда хотелось быть чьим то домом, который и от дождя спасет, и от ебаного осуждения со стороны других людей, где никогда не будет холодно, и куда будет желание возвращаться как можно скорее.</p>
+        <p>катюш, когда писал тебе о том что мне тебя не хватает, когда спрашивал почему ты пишешь люблю без ОЧЕНЬ СИЛЬНО хавыххв, почему перестала лайкать стикеры.</p>
+        <p>просто не мог объяснить словами насколько важно твое внимание для меня, насколько сильно мне бы сейчас, в момент когда ты читаешь это сообщение, не хотелось приехать к тебе, просто побыть рядом, выслушать тебя, поддержать и сказать глядя тебе в глаза что я верю в тебя, и не меньше доверяю. я не могу этого сделать, созваниваться у нас получается тоже редко, и единственное место где мы можем побыть друг с другом в этот период это тут, в тиктоке или тугезерлиххвыа, поэтому я и накидываю тебе тиктоки, пишу и стараюсь быть рядом когда тебе это нужно, осознал что тебе порой просто хочется подрамматизировать и услышать поддержку в свою сторону а не слушать как решить проблему или примеры какието, знаю что тебе тоже хочется, взять меня за ручку, поцеловать, просто ощутить мое присутствие рядом, и я надеюсь что этим сообщением я смогу вызвать у тебя тепло, и если вдруг слезки, то только счастья любимая🖤</p>
+        <p>котенок уважаю твое лично пространство, и стараюсь не задерживать, и не тревожить тебя перед сном так как понимаю что плохой сон скажется на тебе очень сильно, и запомнил я это просто потому что тебе это важно, просто потому что так моя любимость чувствует себя лучшее и счастливее.</p>
+        <p>когда ты об этом так прямо сказала после психолога, это звучало как "ты не должен мне писать пока я занимаюсь своими делами" в моих глазах, сейчас я это понимаю, а тогда не понимал из-за чего мне тревожно на счет этого</p>
+        <p>а просто потому что нам еще когда я был в москве, из-за вечного пиздеца у тебя на работе, и моей работы в твои смены, пиздец с яном, пиздеца с внезапной повесткой, и самое главное что тебе даже дома порой бывает тяжело отдохнуть. было очень тяжело, тебе я не представляю насколько, если у тебя был такой ужасный период зайка на тот момент, прости что тогда думал только о себе, и сейчас понимаю насколько делал тебе этим больно. потом я уехал, и боялся того что нашего общения станет еще меньше из-за того что ситуация у тебя на работе не успокаивалась, ты не высыпалась, и мои постоянные разъезды по врачам, от ощущения что я уже не смогу просто приехать встретить после работы становилось еще хуже, что мы буквально только в переписке можем быть рядом, где у нас не получается этого делать.</p>
+        <p>мне и было страшно тогда, что я буквально ничего не могу сделать, потому что чувствовал что в эти моменты было ощущение что тебе и так не сладко, а я этими разговорами делаю еще хуже(, а после того как ты мне сказала про личное пространство, это в совокупности всего звучало именно так как я написал тебе выше. и от ощущения что не могу ничего сделать, я и поговорил тогда с тобой второй раз на счет этого. сейчас я это в самом практически канце пишу, потому что тогда я ну, ну просто не смог объяснить почему для меня это так звучало, и почему настолько было важно. а сейчас могу сказать что именно я тогда испытывал.</p>
+        <p>честно, с момента когда я предложил тебе быть моей девушкой, я ни разу об этом не жалел, появление тебя в моей жизни это самое прекрасное и лучшее событие в моей жизни. после того как ты сказала что просто не умеешь скучать, я не знаю как объяснить, это не такая простая вещь как например выгорание, а ты еще и объяснила мне что именно имеешь ввиду под этим. и мне блять безумно было интересно это слушать, ты в моих глазах всегда будешь маленьким котенком, которого так и хочется погладить, обнять, и быть рядом слушая и принимая тебя. ведь я люблю именно тебя катюш, даже когда не понимаем друг друга, даже когда тебе грустно или у тебя нет настроения, когда смеешься громче всех и сильно улыбаешься. я и влюбился в тебя потому что в моих глазах ты всегда была и будешь лучше остальных, люблю любую теббя котен, а не образы.</p>
+        <p>так давай продолжим делать жизнь друг друга еще счастливее, влюбляться в друг друга еще сильнее чем раньше, и продолжать выбирать каждый день.&lt;3</p>
+        <p class="gap">катюш, я никого и никогда так не любил, и никто не делал меня таким счастливым, это получается только у тебя зайка</p>
+        <p>и хочу просто сказать спасибо за то, что ты есть, что ты столько для меня делаешь.</p>
+        <p>3 месяца как появились "мы", и надеюсь что своими усилиями я тоже делаю твою жизнь хоть чуточку лучше хиххи.</p>
+        <p class="end">ты самая лучшая девушка катюш, я бесконечно рад тому, что ты выбираешь меня🩶🖤🩶🖤🩶</p>
+        <button id="gift" type="button">Сюрприз для тебя 🎁</button>
+      </div>
+    </div>
+    <p class="hint" id="hint">текст листается сам · можно листать пальцем 🌷</p>
+  </section>
+
+</main>
+
+<!-- окно сюрприза -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Сюрприз">
+  <div class="modal-box">
+    <h2>Это тебе, зайка! 🎀</h2>
+    <p>Покажи этот QR-код, чтобы получить свой подарок 💝</p>
+    <div class="qr" id="qrbox">
+      <img src="qr.png" alt="QR-код для получения подарка"
+           onerror="this.remove();document.getElementById('qrbox').innerHTML='<div class=soon>Сюрприз уже совсем скоро 🐰💗</div>'">
+    </div>
+    <button class="close" id="close" type="button">Закрыть</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var TARGET = "2026-08-19";
+  var s1 = document.getElementById("s1"), s2 = document.getElementById("s2");
+  var input = document.getElementById("date"), err = document.getElementById("err");
+  var letter = document.getElementById("letter");
+  var set = ["💗","💖","🌸","🎀","💕","🐰","🩷"];
+  var heartsTimer = null;
+
+  /* падающие сердечки на фоне */
+  function dropHeart(){
+    var h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = set[Math.floor(Math.random()*set.length)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = (14 + Math.random()*22) + "px";
+    var dur = 6 + Math.random()*6;
+    h.style.animationDuration = dur + "s";
+    h.style.opacity = (0.55 + Math.random()*0.45).toFixed(2);
+    document.body.appendChild(h);
+    setTimeout(function(){ h.remove(); }, dur*1000 + 200);
+  }
+  function startHearts(){
+    for(var i=0;i<14;i++) setTimeout(dropHeart, i*220);
+    if(!heartsTimer) heartsTimer = setInterval(dropHeart, 450);
+  }
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden){ clearInterval(heartsTimer); heartsTimer = null; }
+    else if(!heartsTimer){ heartsTimer = setInterval(dropHeart, 450); }
+  });
+
+  /* плавная автопрокрутка письма */
+  var pos = 0, last = null, paused = true, resumeAt = 0, running = false;
+  var SPEED = 26; // пикселей в секунду
+  function tick(t){
+    if(last === null) last = t;
+    var dt = (t - last)/1000; last = t;
+    var max = letter.scrollHeight - letter.clientHeight;
+    if(!paused && performance.now() >= resumeAt){
+      pos = Math.min(max, pos + SPEED*dt);
+      letter.scrollTop = pos;
+    }
+    if(pos < max - 1 || paused || performance.now() < resumeAt) requestAnimationFrame(tick);
+    else running = false;
+  }
+  function begin(delay){
+    paused = false; resumeAt = performance.now() + delay; last = null;
+    if(!running){ running = true; requestAnimationFrame(tick); }
+  }
+  function userTouch(){
+    paused = true; clearTimeout(userTouch.t);
+    userTouch.t = setTimeout(function(){
+      pos = letter.scrollTop; begin(0);
+    }, 4000);
+  }
+  ["touchstart","wheel","mousedown","keydown"].forEach(function(ev){
+    letter.addEventListener(ev, userTouch, {passive:true});
+  });
+  letter.addEventListener("scroll", function(){
+    if(paused) pos = letter.scrollTop;
+  }, {passive:true});
+
+  function check(){
+    if(input.value === TARGET){
+      s1.classList.remove("active"); s2.classList.add("active");
+      var start = new Date(2026,7,19), now = new Date();
+      var d = Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate()) - start)/86400000);
+      if(d > 0) document.getElementById("days").textContent = "Мы вместе уже " + d + " дн. 💕";
+      startHearts();
+      letter.scrollTop = 0; pos = 0;
+      begin(2500);
+    } else {
+      err.textContent = input.value ? "Почти! Попробуй ещё раз 🙂" : "Выбери дату 🌷";
+      input.classList.remove("shake"); void input.offsetWidth; input.classList.add("shake");
+    }
+  }
+  var modal = document.getElementById("modal");
+  function openModal(){ modal.classList.add("open"); paused = true; clearTimeout(userTouch.t); }
+  function closeModal(){ modal.classList.remove("open"); }
+  document.getElementById("gift").addEventListener("click", openModal);
+  document.getElementById("close").addEventListener("click", closeModal);
+  modal.addEventListener("click", function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeModal(); });
+
+  document.getElementById("go").addEventListener("click", check);
+  input.addEventListener("keydown", function(e){ if(e.key==="Enter") check(); });
+})();
+</script>
+</body>
+</html>
