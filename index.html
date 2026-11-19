@@ -47,6 +47,14 @@
     padding:14px 16px; border-radius:20px; border:3px solid var(--soft);
     background:#fff; outline:none; text-align:center;
   }
+  input[type=date]{
+    -webkit-appearance:none; appearance:none;
+    display:block; width:100%; max-width:100%; min-width:0; min-height:56px;
+    margin:0; text-align:center; text-align-last:center;
+  }
+  input[type=date]::-webkit-date-and-time-value{text-align:center;margin:0 auto;min-height:1.4em}
+  input[type=date]::-webkit-datetime-edit{display:inline-block;padding:0;text-align:center}
+  input[type=date]::-webkit-calendar-picker-indicator{margin-left:6px}
   input[type=date]:focus{border-color:var(--pink)}
   button{
     margin-top:14px; width:100%; font:inherit; font-size:18px; font-weight:700;
